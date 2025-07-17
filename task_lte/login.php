@@ -1,3 +1,15 @@
+<?php
+session_start();
+if (isset($_SESSION['user'])) {
+    header("Location:index.php");
+    exit();
+}
+?>
+<script>
+  if (window.history && window.history.replaceState) {
+    window.history.replaceState({}, document.title, "index.php");
+  }
+</script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,6 +26,7 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/adminlte.min.css">
 </head>
+
 <body class="hold-transition login-page">
 <div class="login-box">
   <!-- /.login-logo -->
@@ -24,10 +37,11 @@
     <div class="card-body">
       <p class="login-box-msg">Sign in to start your session</p>
 
-      <?php
-     include("error_message.php");
+     <?php
+     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['error'])) {
+     echo "<div class='alert alert-danger'>" . htmlspecialchars($_POST['error']) . "</div>";
+     }
      ?>
-
       <form action="login_process.php" method="post">
         <div class="input-group mb-3">
           <input type="name" class="form-control" name="username" placeholder="UserName">
@@ -76,7 +90,7 @@
         <a href="forgot-password.html">I forgot my password</a>
       </p>
       <p class="mb-0">
-        <a href="register.html" class="text-center">Register a new membership</a>
+        <a href="register.php" class="text-center">Register a new membership</a>
       </p>
     </div>
     <!-- /.card-body -->

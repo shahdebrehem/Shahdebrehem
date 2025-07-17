@@ -1,5 +1,4 @@
 <?php
-session_start();
 include("login_start.php");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -13,13 +12,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result = $stmt->get_result();
     $user = $result->fetch_assoc();
 
-    if ($user && $pass === $user['password']) {
-        $_SESSION['username'] = $User_Name;
-        header("Location:index.php");
+    if ($user && password_verify($pass, $user['password'])) {
+        session_start();
+        $_SESSION['user'] = [
+            'Id' => $user['Id'],
+            'user_name' => $user['user_name']
+        ];
+        header("Location: index.php");
         exit();
     } else {
-        $_SESSION['error'] = "Incorrect password or username";
-        header("Location: login.php");
+        $errorMessage = "Incorrect Username or Password";
+
+        echo '
+        <form id="redirectForm" method="post" action="login.php">
+            <input type="hidden" name="error" value="' . htmlspecialchars($errorMessage) . '">
+        </form>
+        <script>document.getElementById("redirectForm").submit();</script>
+        ';
         exit();
     }
 }
