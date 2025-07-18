@@ -7,7 +7,7 @@ if (isset($_SESSION['user'])) {
 ?>
 <script>
   if (window.history && window.history.replaceState) {
-    window.history.replaceState({}, document.title, "index.php");
+    window.history.replaceState({}, document.title, "register.php");
   }
 </script>
 <!DOCTYPE html>
@@ -34,7 +34,23 @@ if (isset($_SESSION['user'])) {
     </div>
     <div class="card-body">
       <p class="login-box-msg">Register a new membership</p>
-
+       <?php
+      if (isset($_SESSION['error'])) {
+       echo '<div style="
+        background-color: #f8d7da;
+        color: #721c24;
+        padding: 10px 15px;
+        border: 1px solid #f5c6cb;
+        border-radius: 5px;
+        margin-bottom: 15px;
+        font-family: Arial, sans-serif;
+        text-align: center;
+    ">
+        ' . htmlspecialchars($_SESSION['error']) . '
+    </div>';
+    unset($_SESSION['error']);
+     }
+     ?>
       <form action="register_process.php" method="post">
   <!-- First Name -->
   <div class="input-group mb-3">
@@ -102,7 +118,7 @@ if (isset($_SESSION['user'])) {
         </a>
       </div>
 
-      <a href="login.html" class="text-center">I already have a membership</a>
+      <a href="login.php" class="text-center">I already have a membership</a>
     </div>
     <!-- /.form-box -->
   </div><!-- /.card -->
