@@ -91,6 +91,20 @@ if (isset($_SESSION['user'])) {
       </div>
     </div>
   </div>
+    <!-- User Role -->
+<div class="input-group mb-3">
+  <select name="role" class="form-control" required>
+    <option value="">-- Select Role --</option>
+    <option value="user">User</option>
+    <option value="admin">Admin</option>
+    <option value="viewer">Viewer</option>
+  </select>
+  <div class="input-group-append">
+    <div class="input-group-text">
+      <span class="fas fa-users"></span>
+    </div>
+  </div>
+</div>
 
   <div class="row">
     <div class="col-8">

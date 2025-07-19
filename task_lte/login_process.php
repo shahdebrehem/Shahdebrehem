@@ -16,9 +16,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         session_start();
         $_SESSION['user'] = [
             'Id' => $user['Id'],
-            'user_name' => $user['user_name']
+            'user_name' => $user['user_name'],
+            'role_id' => $user['role_id'] // 🆕 خزنا الدور في السيشن
         ];
-        header("Location: index.php");
+
+        // 🧠 التوجيه بناءً على قيمة role_id
+        switch ($user['role_id']) {
+            case 3:
+                header("Location: project-edit.php");
+                break;
+            case 2:
+                header("Location: project-add.php");
+                break;
+            case 4:
+                header("Location: index.php");
+                break;
+            default:
+                header("Location: register.php"); // صفحة عامة أو افتراضية
+                break;
+        }
+
         exit();
     } else {
         $errorMessage = "Incorrect Username or Password";
